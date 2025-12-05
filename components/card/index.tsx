@@ -121,7 +121,6 @@ const Card = (props: ICardProps) => {
                   style={{
                     filter: hasGrayScale ? "grayscale(100%)" : "none",
                     imageRendering: "crisp-edges",
-                    WebkitImageRendering: "crisp-edges" as any,
                     maxHeight: "80vh",
                   }}
                   loading="eager"
