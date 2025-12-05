@@ -41,11 +41,24 @@ export function SolanaWalletProvider({ children }: IWalletProviderProps) {
 
   // Error handler to prevent unhandled errors from breaking the app
   const onError = (error: Error) => {
-    // Only log non-critical errors
-    if (error.name !== "WalletNotSelectedError") {
-      console.error("Wallet error:", error);
+    // Filter out common non-critical errors
+    const ignoredErrors = [
+      "WalletNotSelectedError",
+      "WalletConnectionError", // User cancelled connection
+    ];
+    
+    // Only log errors that are not in the ignored list
+    if (!ignoredErrors.includes(error.name)) {
+      // Log with more context
+      console.error("Wallet adapter error:", {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      });
     }
-    // For WalletNotSelectedError, we'll handle it in the components
+    
+    // For WalletNotSelectedError and WalletConnectionError, we'll handle it in the components
+    // These are user actions (cancelling), not actual errors
   };
 
   return (

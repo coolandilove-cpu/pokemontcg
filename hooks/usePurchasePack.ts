@@ -145,10 +145,36 @@ export function usePurchasePack() {
         // Send transaction
         // For devnet testing, skip preflight to avoid simulation errors
         // In production, you may want to keep skipPreflight: false for security
-        const signature = await sendTransaction(transaction, connection, {
-          skipPreflight: true, // Skip preflight to avoid simulation errors in devnet
-          maxRetries: 3,
-        });
+        let signature: string;
+        try {
+          signature = await sendTransaction(transaction, connection, {
+            skipPreflight: true, // Skip preflight to avoid simulation errors in devnet
+            maxRetries: 3,
+          });
+        } catch (txError: any) {
+          // Handle transaction sending errors
+          const errorMessage = txError?.message || txError?.toString() || "Unknown transaction error";
+          console.error("Transaction send error:", {
+            error: txError,
+            message: errorMessage,
+            network,
+            recipientAddress: recipientAddressToUse,
+            amount: price,
+          });
+          
+          // Provide user-friendly error messages
+          if (errorMessage.includes("User rejected") || errorMessage.includes("User cancelled")) {
+            throw new Error("Transaction cancelled by user");
+          } else if (errorMessage.includes("insufficient funds") || errorMessage.includes("Insufficient")) {
+            throw new Error("Insufficient SOL balance. Please ensure you have enough SOL to cover the transaction fee.");
+          } else if (errorMessage.includes("network") || errorMessage.includes("Network")) {
+            throw new Error("Network error. Please check your connection and try again.");
+          } else if (errorMessage.includes("timeout") || errorMessage.includes("Timeout")) {
+            throw new Error("Transaction timeout. Please try again.");
+          } else {
+            throw new Error(`Transaction failed: ${errorMessage}`);
+          }
+        }
 
         // Wait for confirmation with timeout
         const confirmation = await connection.confirmTransaction({
