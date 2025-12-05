@@ -258,9 +258,9 @@ const Header = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Connect a wallet on Solana to continue</DialogTitle>
+            <DialogTitle>Connect Wallet</DialogTitle>
             <DialogDescription>
-              Select a wallet to connect to your account
+              Select a wallet
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-2 mt-4">
