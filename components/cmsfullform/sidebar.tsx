@@ -526,7 +526,7 @@ export default function Sidebar() {
                 className="flex items-center gap-3 w-full"
               >
                 <img
-                  src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
+                  src="/pokedex.png"
                   alt="PokemonTCGDex"
                   width={32}
                   height={32}
@@ -602,14 +602,14 @@ export default function Sidebar() {
                 className="flex items-center gap-3 w-full"
               >
                 <img
-                  src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
+                  src="/pokedex.png"
                   alt="PokemonTCGDex"
                   width={32}
                   height={32}
                   className="flex-shrink-0 hidden dark:block"
                 />
                 <img
-                  src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
+                  src="/pokedex.png"
                   alt="PokemonTCGDex"
                   width={32}
                   height={32}
@@ -622,14 +622,14 @@ export default function Sidebar() {
             ) : (
               <div className="flex justify-center w-full">
                 <img
-                  src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
+                  src="/pokedex.png"
                   alt="PokemonTCGDex"
                   width={32}
                   height={32}
                   className="flex-shrink-0 hidden dark:block"
                 />
                 <img
-                  src="https://cmsfullform.com/themes/cmsfullform/Backend/Assets/favicon/apple-icon-60x60.png"
+                  src="/pokedex.png"
                   alt="PokemonTCGDex"
                   width={32}
                   height={32}
