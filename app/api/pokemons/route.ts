@@ -18,6 +18,14 @@ export interface IPokemon {
   pack: string;
   health: string;
   image: string;
+  // Optional fields for additional card information
+  ability?: string;
+  attack?: string;
+  skill?: string;
+  description?: string;
+  weakness?: string;
+  resistance?: string;
+  retreat?: string;
 }
 
 export async function GET(request: NextRequest) {

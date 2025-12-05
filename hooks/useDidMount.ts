@@ -1,5 +1,7 @@
+"use client";
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 
-export const useDidMount = (callback: () => void) =>
+export const useDidMount = (callback: () => void | (() => void)) =>
   useEffect(() => callback(), []);

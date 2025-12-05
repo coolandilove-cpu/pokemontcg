@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/contexts/Auth";
-import { auth } from "@/lib/firebase";
+import { auth, isFirebaseConfigured } from "@/lib/firebase";
 import { User } from "firebase/auth";
 import { useEffect, useMemo, useState } from "react";
 
@@ -40,16 +40,24 @@ export const useAuth = (): IUseAuth => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-        return;
-      }
-    });
+    if (!isFirebaseConfigured || !auth) {
+      return;
+    }
 
-    return () => {
-      unsubscribe();
-    };
+    try {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          setUser(user);
+          return;
+        }
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    } catch (error) {
+      console.warn("Error setting up auth state listener:", error);
+    }
   }, []);
 
   if (isAuthenticated) {

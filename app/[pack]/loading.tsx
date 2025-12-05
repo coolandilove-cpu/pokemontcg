@@ -23,9 +23,9 @@ const Loading = () => {
                 <Skeleton className="h-12 w-1/2" />
               </h2>
               <p className="text-xl mb-6">
-                Essas são as suas estatísticas (cartas obtidas do pacote / total
-                cartas do pacote), atualize os dados clicando nas cartas abaixo
-                e saiba quantas cartas você já possui de cada pacote!
+                These are your statistics (cards obtained from the pack / total
+                cards in the pack), update the data by clicking on the cards below
+                and find out how many cards you already have from each pack!
               </p>
             </div>
             <div className="md:w-2/6 flex justify-center">

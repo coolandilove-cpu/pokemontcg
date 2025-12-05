@@ -88,28 +88,28 @@ const DialogImportLocalStorageCards = () => {
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Importação de cartas para sua conta!</DrawerTitle>
+            <DrawerTitle>Import cards to your account!</DrawerTitle>
             <DrawerDescription>
               {" "}
-              Notamos que você possui cartas salvas em seu navegador, deseja
-              importá-las para sua conta?
+              We noticed that you have cards saved in your browser, would you like
+              to import them to your account?
             </DrawerDescription>
 
             <DrawerDescription>
-              Caso você importe as cartas, as cartas salvas no navegador serão
-              removidas e adicionadas a sua conta.
+              If you import the cards, the cards saved in the browser will be
+              removed and added to your account.
             </DrawerDescription>
           </DrawerHeader>
         </div>
 
         <DrawerFooter>
           <Button type="button" onClick={onImportCards}>
-            Importar
+            Import
           </Button>
 
           <DrawerClose asChild>
             <Button type="button" variant="secondary" onClick={onCancelImport}>
-              Cancelar
+              Cancel
             </Button>
           </DrawerClose>
         </DrawerFooter>
@@ -119,27 +119,27 @@ const DialogImportLocalStorageCards = () => {
     <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Importação de cartas para sua conta!</DialogTitle>
+          <DialogTitle>Import cards to your account!</DialogTitle>
           <DialogDescription>
-            Notamos que você possui cartas salvas em seu navegador, deseja
-            importá-las para sua conta?
+            We noticed that you have cards saved in your browser, would you like
+            to import them to your account?
           </DialogDescription>
 
           <DialogDescription>
-            Caso você importe as cartas, as cartas salvas no navegador serão
-            removidas e adicionadas a sua conta.
+            If you import the cards, the cards saved in the browser will be
+            removed and added to your account.
           </DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="flex justify-end">
           <DialogClose asChild>
             <Button type="button" variant="secondary" onClick={onCancelImport}>
-              Cancelar
+              Cancel
             </Button>
           </DialogClose>
 
           <Button type="button" onClick={onImportCards}>
-            Importar
+            Import
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,3 +1,5 @@
+"use client";
+
 import { IStorage } from ".";
 import { EventEmitter } from "events";
 

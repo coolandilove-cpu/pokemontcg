@@ -1,3 +1,5 @@
+"use client";
+
 import { useDidMount } from "@/hooks/useDidMount";
 import React, {
   createContext as reactCreateContext,

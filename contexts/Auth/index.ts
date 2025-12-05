@@ -1,3 +1,5 @@
+"use client";
+
 import { User } from "firebase/auth";
 import createContextFactory from "..";
 import { googleAuthAdapter } from "./GoogleAuthAdapter";

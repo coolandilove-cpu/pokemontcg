@@ -5,6 +5,10 @@ import { Nunito } from "next/font/google";
 
 import "./globals.css";
 import { Sidebar } from "@/components/sidebar";
+import { Providers } from "@/contexts/Providers";
+import WalletButtonWrapper from "@/components/WalletButtonWrapper";
+import { ThemeProvider } from "@/components/theme-provider";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const nunito = Nunito({
   weight: ["400", "700"],
@@ -13,9 +17,9 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "PokéAlbum",
+  title: "PokémonTCGDEX",
   description:
-    "Sua plataforma para colecionar, organizar e compartilhar sua coleção de Pokémon TCG Pocket com amigos e outros treinadores.",
+    "Your platform to collect, organize and share your Pokémon TCG Pocket collection with friends and other trainers.",
 };
 
 export default function RootLayout({
@@ -24,15 +28,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={nunito.className}>
+    <html lang="en" className={nunito.className} suppressHydrationWarning>
       <link rel="icon" href="/pokedex.png" sizes="any" />
 
-      <body className="w-screen h-screen m-0 p-0 flex justify-center bg-gray-50">
-        {children}
+      <body className="w-screen h-screen m-0 p-0 flex justify-center bg-gray-50" suppressHydrationWarning>
+        <div id="root">
+          <ErrorBoundary>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+              <Providers>
+                {children}
+                <WalletButtonWrapper />
+              </Providers>
 
-        <Sidebar />
-        <Analytics />
-        <SpeedInsights />
+              <Sidebar />
+              <Analytics />
+              <SpeedInsights />
+            </ThemeProvider>
+          </ErrorBoundary>
+        </div>
       </body>
     </html>
   );

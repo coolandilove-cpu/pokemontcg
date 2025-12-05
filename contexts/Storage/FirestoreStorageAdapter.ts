@@ -1,4 +1,4 @@
-import { db } from "@/lib/firebase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { IStorage } from ".";
 import {
   addDoc,
@@ -16,6 +16,11 @@ class FirestoreStorageAdapter implements IStorage {
   private eventEmitter = new EventEmitter();
 
   async getItem<T>(key: string): Promise<T | undefined> {
+    if (!isFirebaseConfigured || !db) {
+      console.warn("Firebase is not configured. Cannot get item from Firestore.");
+      return undefined;
+    }
+
     const collectionRef = collection(db, key);
 
     return await getDocs(collectionRef).then((querySnapshot) => {
@@ -28,6 +33,11 @@ class FirestoreStorageAdapter implements IStorage {
   }
 
   async setItem<T>(key: string, value: T): Promise<void> {
+    if (!isFirebaseConfigured || !db) {
+      console.warn("Firebase is not configured. Cannot set item to Firestore.");
+      return;
+    }
+
     const collectionRef = collection(db, key);
     const data = value as DocumentData;
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import {
   charizardBoosterCards,
@@ -6,12 +6,7 @@ import {
   mythicalIslandCards,
   pickachuBoosterCards,
 } from "@/constants/boosterCards";
-import { useClaimedPokemons } from "./useClaimedPokemons";
-import { collection, onSnapshot } from "firebase/firestore";
-import { localStorageAdapter } from "@/contexts/Storage/LocalStorageAdapter";
-import { db } from "@/lib/firebase";
-import { useAuth } from "@/hooks/useAuth";
-
+import { useCollection } from "@/contexts/CollectionContext";
 import pokemons from "@/app/api/pokemons/pokemons.json";
 
 const dialgaBoosterCards = pokemons
@@ -44,8 +39,7 @@ const lunalaBoosterCards = pokemons
   .map((pokemon) => pokemon.id);
 
 export const usePokemonStatistics = () => {
-  const { getClaimedPokemons } = useClaimedPokemons();
-  const { user, isAuthenticated } = useAuth();
+  const { collectedCards } = useCollection();
 
   const [charizardBoosterCardsObtained, setCharizardBoosterCardsObtained] =
     useState<string[]>([]);
@@ -94,94 +88,124 @@ export const usePokemonStatistics = () => {
   const [fullArtPokemon, setFullArtPokemon] = useState(0);
   const [shinyPokemon, setShinyPokemon] = useState(0);
 
-  const handleCountBoosterCards = async (claimedPokemons: string[]) => {
+  useEffect(() => {
+    // Convert Set to Array for filtering
+    const collectedCardsArray = Array.from(collectedCards);
+
     setCharizardBoosterCardsObtained(
-      claimedPokemons.filter((card) => charizardBoosterCards.includes(card))
+      collectedCardsArray.filter((card) => charizardBoosterCards.includes(card))
     );
 
     setPickachuBoosterCardsObtained(
-      claimedPokemons.filter((card) => pickachuBoosterCards.includes(card))
+      collectedCardsArray.filter((card) => pickachuBoosterCards.includes(card))
     );
 
     setMewtwoBoosterCardsObtained(
-      claimedPokemons.filter((card) => mewtwoBoosterCards.includes(card))
+      collectedCardsArray.filter((card) => mewtwoBoosterCards.includes(card))
     );
 
     setMythicalIslandCardsCardsObtained(
-      claimedPokemons.filter((card) => mythicalIslandCards.includes(card))
+      collectedCardsArray.filter((card) => mythicalIslandCards.includes(card))
     );
 
     setDialgaBoosterCardsObtained(
-      claimedPokemons.filter((card) => dialgaBoosterCards.includes(card))
+      collectedCardsArray.filter((card) => dialgaBoosterCards.includes(card))
     );
 
     setPalkiaBoosterCardsObtained(
-      claimedPokemons.filter((card) => palkiaBoosterCards.includes(card))
+      collectedCardsArray.filter((card) => palkiaBoosterCards.includes(card))
     );
 
     setTriumphantLightBoosterCardsObtained(
-      claimedPokemons.filter((card) => triumphantLightCards.includes(card))
+      collectedCardsArray.filter((card) => triumphantLightCards.includes(card))
     );
 
     setPromoBoosterCardsObtained(
-      claimedPokemons.filter((card) => promoCards.includes(card))
+      collectedCardsArray.filter((card) => promoCards.includes(card))
     );
 
     setShiningRevelryBoosterCardsObtained(
-      claimedPokemons.filter((card) =>
+      collectedCardsArray.filter((card) =>
         shiningRevelryBoosterCards.includes(card)
       )
     );
 
     setSolgaleoBoosterCardsObtained(
-      claimedPokemons.filter((card) => solgaleoBoosterCards.includes(card))
+      collectedCardsArray.filter((card) => solgaleoBoosterCards.includes(card))
     );
     setLunalaBoosterCardsObtained(
-      claimedPokemons.filter((card) => lunalaBoosterCards.includes(card))
+      collectedCardsArray.filter((card) => lunalaBoosterCards.includes(card))
     );
 
-    setTotalCollected(claimedPokemons.length);
+    setTotalCollected(collectedCardsArray.length);
     setPercentComplete(
-      Math.round((claimedPokemons.length / pokemons.length) * 100)
+      Math.round((collectedCardsArray.length / pokemons.length) * 100)
     );
 
     setFullArtPokemon(
-      claimedPokemons.filter((card) => {
+      collectedCardsArray.filter((card) => {
         const pokemon = pokemons.find((p) => p.id === card);
         return !pokemon?.rarity.startsWith("◊") && pokemon?.rarity !== "";
       }).length
     );
 
     setShinyPokemon(
-      claimedPokemons.filter((card) => {
+      collectedCardsArray.filter((card) => {
         const pokemon = pokemons.find((p) => p.id === card);
         return pokemon?.rarity.startsWith("★");
       }).length
     );
-  };
+  }, [collectedCards]);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      const onGetClaimedPokemons = async () => {
-        localStorageAdapter.onUpdate(async () => {
-          const claimedPokemons = await getClaimedPokemons();
-          handleCountBoosterCards(claimedPokemons);
-        });
+  // Calculate progress values directly from collectedCards using useMemo for accuracy
+  const progressValues = useMemo(() => {
+    const collectedCardsArray = Array.from(collectedCards);
+    
+    const charizardObtained = collectedCardsArray.filter((card) => charizardBoosterCards.includes(card)).length;
+    const mewtwoObtained = collectedCardsArray.filter((card) => mewtwoBoosterCards.includes(card)).length;
+    const pikachuObtained = collectedCardsArray.filter((card) => pickachuBoosterCards.includes(card)).length;
+    const mythicalIslandObtained = collectedCardsArray.filter((card) => mythicalIslandCards.includes(card)).length;
+    const dialgaObtained = collectedCardsArray.filter((card) => dialgaBoosterCards.includes(card)).length;
+    const palkiaObtained = collectedCardsArray.filter((card) => palkiaBoosterCards.includes(card)).length;
+    const triumphantLightObtained = collectedCardsArray.filter((card) => triumphantLightCards.includes(card)).length;
+    const promoObtained = collectedCardsArray.filter((card) => promoCards.includes(card)).length;
+    const shiningRevelryObtained = collectedCardsArray.filter((card) => shiningRevelryBoosterCards.includes(card)).length;
+    const solgaleoObtained = collectedCardsArray.filter((card) => solgaleoBoosterCards.includes(card)).length;
+    const lunalaObtained = collectedCardsArray.filter((card) => lunalaBoosterCards.includes(card)).length;
 
-        const claimedPokemons = await getClaimedPokemons();
-        handleCountBoosterCards(claimedPokemons);
-      };
+    const geneticApexTotal = charizardBoosterCards.length + mewtwoBoosterCards.length + pickachuBoosterCards.length;
+    const geneticApexObtained = charizardObtained + mewtwoObtained + pikachuObtained;
+    
+    const spaceTimeTotal = dialgaBoosterCards.length + palkiaBoosterCards.length;
+    const spaceTimeObtained = dialgaObtained + palkiaObtained;
+    
+    const celestialGuardiansTotal = solgaleoBoosterCards.length + lunalaBoosterCards.length;
+    const celestialGuardiansObtained = solgaleoObtained + lunalaObtained;
 
-      onGetClaimedPokemons();
-      return;
-    }
-
-    const collectionRef = collection(db, user.uid);
-    onSnapshot(collectionRef, (snapshot) => {
-      const document = snapshot.docs.map((doc) => doc.data());
-      handleCountBoosterCards(document[0].claimedCards);
-    });
-  }, [getClaimedPokemons, isAuthenticated, user?.uid]);
+    return {
+      geneticApexProgress: geneticApexTotal > 0 
+        ? Math.round((geneticApexObtained / geneticApexTotal) * 100)
+        : 0,
+      mythicalIslandProgress: mythicalIslandCards.length > 0
+        ? Math.round((mythicalIslandObtained / mythicalIslandCards.length) * 100)
+        : 0,
+      spaceTimeSmackdownProgress: spaceTimeTotal > 0
+        ? Math.round((spaceTimeObtained / spaceTimeTotal) * 100)
+        : 0,
+      triumphantLightProgress: triumphantLightCards.length > 0
+        ? Math.round((triumphantLightObtained / triumphantLightCards.length) * 100)
+        : 0,
+      promoAProgress: promoCards.length > 0
+        ? Math.round((promoObtained / promoCards.length) * 100)
+        : 0,
+      shiningRevelryProgress: shiningRevelryBoosterCards.length > 0
+        ? Math.round((shiningRevelryObtained / shiningRevelryBoosterCards.length) * 100)
+        : 0,
+      celestialGuardiansProgress: celestialGuardiansTotal > 0
+        ? Math.round((celestialGuardiansObtained / celestialGuardiansTotal) * 100)
+        : 0,
+    };
+  }, [collectedCards]);
 
   return {
     charizardBoosterCardsObtained,
@@ -222,41 +246,6 @@ export const usePokemonStatistics = () => {
     fullArtPokemon,
     shinyPokemon,
 
-    geneticApexProgress: Math.round(
-      ((charizardBoosterCardsObtained.length +
-        mewtwoBoosterCardsObtained.length +
-        pickachuBoosterCardsObtained.length) /
-        (charizardBoosterCards.length +
-          mewtwoBoosterCards.length +
-          pickachuBoosterCards.length)) *
-        100
-    ),
-    mythicalIslandProgress: Math.round(
-      (mythicalIslandCardsObtained.length / mythicalIslandCards.length) * 100
-    ),
-    spaceTimeSmackdownProgress: Math.round(
-      ((dialgaBoosterCardsObtained.length + palkiaBoosterCardsObtained.length) /
-        (dialgaBoosterCards.length + palkiaBoosterCards.length)) *
-        100
-    ),
-    triumphantLightProgress: Math.round(
-      (triumphantLightBoosterCardsObtained.length /
-        triumphantLightCards.length) *
-        100
-    ),
-    promoAProgress: Math.round(
-      (promoBoosterCardsObtained.length / promoCards.length) * 100
-    ),
-    shiningRevelryProgress: Math.round(
-      (shiningRevelryBoosterCardsObtained.length /
-        shiningRevelryBoosterCards.length) *
-        100
-    ),
-    celestialGuardiansProgress: Math.round(
-      ((solgaleoBoosterCardsObtained.length +
-        lunalaBoosterCardsObtained.length) /
-        (solgaleoBoosterCards.length + lunalaBoosterCards.length)) *
-        100
-    ),
+    ...progressValues,
   };
 };

@@ -28,6 +28,7 @@
   box-shadow: 0 5px 20px 5px #00000044;
 
   z-index: 1;
+  transform: scale(1.05);
 }
 
 .card .glow {

@@ -44,6 +44,11 @@ const collections = [
 export const Sidebar: FC = () => {
   const currentPath = usePathname();
 
+  // Ẩn Sidebar khi đang ở trang dashboard hoặc các trang con của dashboard
+  if (currentPath?.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <nav className="z-20 hidden md:flex justify-around gap-4 border-t border-gray-200 bg-white/50 p-2.5 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 fixed top-2/4 -translate-y-2/4 left-3 min-h-[auto] min-w-[64px] flex-col rounded-lg border">
       {collections.map((collection) => (

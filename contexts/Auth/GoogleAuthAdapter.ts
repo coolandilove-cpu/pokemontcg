@@ -1,9 +1,14 @@
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { IAuth } from ".";
-import { auth } from "@/lib/firebase";
+import { auth, isFirebaseConfigured } from "@/lib/firebase";
 
 class GoogleAuthAdapter implements IAuth {
   public onSignInWithGoogle = async () => {
+    if (!isFirebaseConfigured || !auth) {
+      console.warn("Firebase is not configured. Cannot sign in.");
+      return undefined;
+    }
+
     const provider = new GoogleAuthProvider();
 
     try {
@@ -16,6 +21,10 @@ class GoogleAuthAdapter implements IAuth {
   };
 
   public onSignOut = () => {
+    if (!isFirebaseConfigured || !auth) {
+      console.warn("Firebase is not configured. Cannot sign out.");
+      return;
+    }
     signOut(auth);
   };
 }
