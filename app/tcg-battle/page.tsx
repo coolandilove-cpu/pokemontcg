@@ -95,7 +95,7 @@ export default function TCGBattlePage() {
               <div className="bg-white p-4 rounded-lg shadow-md">
                 <div className="mb-2 flex items-center justify-center">
                   <img 
-                    src="/sidebar/dashboard.jpg" 
+                    src="/sidebar/defence.png" 
                     alt="Defense" 
                     className="w-12 h-12 object-contain"
                   />
@@ -106,7 +106,7 @@ export default function TCGBattlePage() {
               <div className="bg-white p-4 rounded-lg shadow-md">
                 <div className="mb-2 flex items-center justify-center">
                   <img 
-                    src="/sidebar/all-cards.jpg" 
+                    src="/sidebar/power.png" 
                     alt="Power Ups" 
                     className="w-12 h-12 object-contain"
                   />
