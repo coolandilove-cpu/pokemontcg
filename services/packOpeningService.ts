@@ -50,7 +50,7 @@ export async function savePackOpening({
       p_card_image: card.image || null,
       p_metadata: metadata || null,
       p_transaction_id: transactionId || null,
-    });
+    } as any);
 
     if (error) {
       console.error("Error inserting pack opening:", error);
@@ -58,7 +58,11 @@ export async function savePackOpening({
     }
 
     // RPC returns array, get first item
-    return data && data.length > 0 ? (data[0] as PackOpening) : null;
+    const result = data as PackOpening[] | null;
+    if (result && Array.isArray(result) && result.length > 0) {
+      return result[0] as PackOpening;
+    }
+    return null;
   } catch (error) {
     console.error("Error saving pack opening to Supabase:", error);
     return null;
@@ -84,7 +88,7 @@ export async function getPackOpenings({
       p_wallet_address: walletAddress,
       p_pack_id: packId || null,
       p_limit: limit,
-    });
+    } as any);
 
     if (error) {
       console.error("Error getting pack openings:", error);

@@ -36,7 +36,7 @@ export async function saveWallet({
       p_wallet_address: walletAddress,
       p_wallet_name: walletName || null,
       p_network: network,
-    });
+    } as any);
 
     if (error) {
       console.error("Error upserting wallet:", error);
@@ -44,7 +44,11 @@ export async function saveWallet({
     }
 
     // RPC returns array, get first item
-    return data && data.length > 0 ? (data[0] as Wallet) : null;
+    const result = data as Wallet[] | null;
+    if (result && Array.isArray(result) && result.length > 0) {
+      return result[0] as Wallet;
+    }
+    return null;
   } catch (error) {
     console.error("Error saving wallet to Supabase:", error);
     return null;

@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
+import type { WalletName } from "@solana/wallet-adapter-base";
 
 const WALLET_STORAGE_KEY = "solana_wallet_connection";
 const WALLET_NAME_STORAGE_KEY = "solana_wallet_name";
@@ -65,7 +66,7 @@ export function useWalletLocalStorage() {
           
           if (state.connected && state.walletName && isMounted) {
             // Chọn wallet đã lưu
-            select(state.walletName);
+            select(state.walletName as WalletName);
             
             // Đợi một chút để wallet được chọn
             await new Promise(resolve => setTimeout(resolve, 200));
@@ -133,7 +134,7 @@ export function useWalletLocalStorage() {
           const state: WalletConnectionState = JSON.parse(storedState);
           if (state.connected && state.walletName && isMounted) {
             // Chọn và kết nối wallet đã lưu
-            select(state.walletName);
+            select(state.walletName as WalletName);
             await new Promise(resolve => setTimeout(resolve, 200));
             if (isMounted) {
               await connect();

@@ -65,7 +65,7 @@ export async function saveTransaction({
       p_network: network,
       p_status: status,
       p_metadata: metadata || null,
-    });
+    } as any);
 
     if (error) {
       console.error("Error inserting transaction:", error);
@@ -73,7 +73,11 @@ export async function saveTransaction({
     }
 
     // RPC returns array, get first item
-    return data && data.length > 0 ? (data[0] as Transaction) : null;
+    const result = data as Transaction[] | null;
+    if (result && Array.isArray(result) && result.length > 0) {
+      return result[0] as Transaction;
+    }
+    return null;
   } catch (error) {
     console.error("Error saving transaction to Supabase:", error);
     return null;
@@ -99,7 +103,7 @@ export async function updateTransactionStatus({
       confirmed_at: confirmedAt || (status === "confirmed" ? new Date().toISOString() : null),
     };
 
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from("transactions")
       .update(updateData)
       .eq("transaction_signature", transactionSignature)

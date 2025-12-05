@@ -48,7 +48,7 @@ export async function addCardToCollection({
       p_card_name: card.name,
       p_pack_id: packId || null,
       p_obtained_from: obtainedFrom,
-    });
+    } as any);
 
     if (error) {
       console.error("Error upserting collection card:", error);
@@ -56,7 +56,11 @@ export async function addCardToCollection({
     }
 
     // RPC returns array, get first item
-    return data && data.length > 0 ? (data[0] as Collection) : null;
+    const result = data as Collection[] | null;
+    if (result && Array.isArray(result) && result.length > 0) {
+      return result[0] as Collection;
+    }
+    return null;
   } catch (error) {
     console.error("Error adding card to collection in Supabase:", error);
     return null;
@@ -80,7 +84,7 @@ export async function getCollection({
     const { data, error } = await supabase.rpc("get_collection", {
       p_wallet_address: walletAddress,
       p_pack_id: packId || null,
-    });
+    } as any);
 
     if (error) {
       console.error("Error getting collection:", error);
@@ -155,7 +159,7 @@ export async function syncCollectionFromPackOpenings(
           p_card_name: opening.card_name,
           p_pack_id: opening.pack_id || null,
           p_obtained_from: "pack_opening",
-        });
+        } as any);
 
         if (error) {
           console.error(`Error syncing card ${opening.card_id} to collection:`, error);

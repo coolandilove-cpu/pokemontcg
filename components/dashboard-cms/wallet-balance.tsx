@@ -145,7 +145,7 @@ export default function WalletBalance() {
     }
   }, [connected, publicKey, connection])
 
-  const recentTransactions = [
+  const recentTransactions: Array<{ id: string; type: string; amount: number; timestamp: number; description?: string }> = [
     // This would be populated from actual transaction history
   ]
 
