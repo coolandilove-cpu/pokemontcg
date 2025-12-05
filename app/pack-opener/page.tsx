@@ -100,7 +100,7 @@ const PACKS = [
     image: "/triumphant-light.png",
     color: "from-yellow-500 to-amber-600",
     glowColor: "rgba(234, 179, 8, 0.3)",
-    price: 0.01, // Common pack - Fixed price (TEST PRICE for mainnet)
+    price: 0.05, // Common pack - Fixed price
     rarity: "common",
   },
   {
