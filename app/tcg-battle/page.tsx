@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Header from "@/components/header";
-import { ArrowLeft, Sword, Shield, Zap } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -29,15 +29,15 @@ export default function TCGBattlePage() {
               transition={{ 
                 duration: 2,
                 repeat: Infinity,
-                repeatDelay: 1
+                repeatDelay: 3
               }}
-              className="flex justify-center mb-6"
+              className="mb-8 flex justify-center"
             >
-              <div className="relative">
-                <Sword className="w-24 h-24 text-red-600" />
-                <Shield className="w-16 h-16 text-blue-600 absolute -bottom-2 -right-2" />
-                <Zap className="w-12 h-12 text-yellow-500 absolute -top-2 -left-2" />
-              </div>
+              <img 
+                src="/sidebar/battle.png" 
+                alt="TCG Battle" 
+                className="w-32 h-32 object-contain"
+              />
             </motion.div>
 
             {/* Title */}
@@ -45,67 +45,89 @@ export default function TCGBattlePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+              className="text-5xl sm:text-6xl font-bold text-gray-900 mb-4"
             >
               TCG Battle
             </motion.h1>
+
+            {/* Coming Soon Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mb-6"
+            >
+              <span className="inline-block px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold text-lg rounded-full shadow-lg">
+                Coming Soon
+              </span>
+            </motion.div>
 
             {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-lg md:text-xl text-gray-600 mb-8"
+              className="text-xl text-gray-600 mb-8 leading-relaxed"
             >
-              Battle with your Pokémon cards! Challenge other trainers and prove your skills in epic card battles.
+              We're working hard to bring you an amazing battle experience!
+              <br />
+              Soon you'll be able to battle with your Pokémon cards against trainers from around the world.
             </motion.p>
 
-            {/* Features */}
+            {/* Features Preview */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+              transition={{ delay: 0.5 }}
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
             >
-              <div className="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg border-2 border-red-200">
-                <Sword className="w-8 h-8 text-red-600 mx-auto mb-2" />
+              <div className="bg-white p-4 rounded-lg shadow-md">
+                <div className="mb-2 flex items-center justify-center">
+                  <img 
+                    src="/sidebar/battle.png" 
+                    alt="Battle Mode" 
+                    className="w-12 h-12 object-contain"
+                  />
+                </div>
                 <h3 className="font-semibold text-gray-900 mb-1">Battle Mode</h3>
                 <p className="text-sm text-gray-600">Challenge other trainers</p>
               </div>
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border-2 border-blue-200">
-                <Shield className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+              <div className="bg-white p-4 rounded-lg shadow-md">
+                <div className="mb-2 flex items-center justify-center">
+                  <img 
+                    src="/sidebar/dashboard.jpg" 
+                    alt="Defense" 
+                    className="w-12 h-12 object-contain"
+                  />
+                </div>
                 <h3 className="font-semibold text-gray-900 mb-1">Defense</h3>
                 <p className="text-sm text-gray-600">Protect your cards</p>
               </div>
-              <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-lg border-2 border-yellow-200">
-                <Zap className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
+              <div className="bg-white p-4 rounded-lg shadow-md">
+                <div className="mb-2 flex items-center justify-center">
+                  <img 
+                    src="/sidebar/all-cards.jpg" 
+                    alt="Power Ups" 
+                    className="w-12 h-12 object-contain"
+                  />
+                </div>
                 <h3 className="font-semibold text-gray-900 mb-1">Power Ups</h3>
                 <p className="text-sm text-gray-600">Boost your attacks</p>
               </div>
             </motion.div>
 
-            {/* Coming Soon Badge */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold mb-6"
-            >
-              Coming Soon
-            </motion.div>
-
             {/* Back Button */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
             >
               <Link href="/">
                 <Button
                   variant="outline"
-                  className="bg-white hover:bg-gray-50 text-black font-bold border-2 border-black flex items-center gap-2"
+                  className="bg-white hover:bg-gray-50 text-gray-700 border-gray-300"
                 >
-                  <ArrowLeft className="w-4 h-4" />
+                  <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
               </Link>
