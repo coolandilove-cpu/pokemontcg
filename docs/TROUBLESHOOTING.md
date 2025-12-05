@@ -89,6 +89,66 @@ NEXT_PUBLIC_MERCHANT_WALLET_ADDRESS=YOUR_MAINNET_WALLET_ADDRESS
 
 ---
 
+### 7. Lỗi "Wallet adapter error" hoặc "Transaction send error"
+
+**Nguyên nhân**: 
+- Network mismatch (wallet ở mainnet nhưng app ở devnet hoặc ngược lại)
+- RPC endpoint không hoạt động
+- Transaction không hợp lệ
+- Wallet không đủ SOL để trả phí
+
+**Triệu chứng**:
+- Error trong console: `Wallet adapter error` hoặc `Transaction send error`
+- Stack trace từ `StandardWalletAdapter.sendTransaction`
+
+**Giải pháp**:
+
+1. **Kiểm tra Network Match**:
+   - Đảm bảo Phantom wallet và app cùng network:
+     - Nếu `.env.local` có `NEXT_PUBLIC_SOLANA_NETWORK=devnet` → Phantom phải ở Devnet
+     - Nếu `.env.local` có `NEXT_PUBLIC_SOLANA_NETWORK=mainnet-beta` → Phantom phải ở Mainnet
+   - Cách kiểm tra: Mở Phantom → Settings → Developer Mode → Xem network hiện tại
+
+2. **Kiểm tra RPC Endpoint**:
+   - Mở Browser DevTools → Network tab
+   - Thử mua pack
+   - Xem có request nào đến RPC endpoint fail không
+   - Nếu dùng custom RPC, kiểm tra API key còn valid không
+
+3. **Kiểm tra SOL Balance**:
+   - Wallet cần có đủ SOL = pack price + transaction fee (~0.000005 SOL)
+   - Nếu không đủ, nạp thêm SOL
+
+4. **Kiểm tra Console Log**:
+   - Mở Browser DevTools → Console
+   - Xem error message chi tiết:
+     ```javascript
+     Transaction send error: {
+       error: Error,
+       message: "...",
+       network: "mainnet-beta",
+       recipientAddress: "...",
+       amount: 0.1
+     }
+     ```
+
+5. **Thử lại**:
+   - Refresh trang
+   - Disconnect và reconnect wallet
+   - Thử lại transaction
+
+**Common Error Messages**:
+
+| Error Message | Cause | Solution |
+|--------------|-------|----------|
+| "User rejected" | User cancelled in wallet | Thử lại và approve |
+| "insufficient funds" | Không đủ SOL | Nạp thêm SOL |
+| "network" / "Network" | Network/RPC issue | Check network match, RPC endpoint |
+| "timeout" / "Timeout" | Transaction timeout | Thử lại sau vài phút |
+| "Invalid recipient" | Merchant address không hợp lệ | Check `.env.local` merchant address |
+
+---
+
 ## Debug Steps
 
 ### Bước 1: Kiểm tra Console Log
@@ -201,4 +261,6 @@ Nếu vẫn gặp vấn đề:
 | "Failed to get latest blockhash" | RPC/Network issue | Thử lại hoặc check RPC |
 | "Transaction failed" | Transaction bị reject | Check transaction trên Solscan |
 | "User rejected" | User cancel transaction | Thử lại và approve |
+| "Wallet adapter error" | Network/RPC/Transaction issue | Check network match, RPC, SOL balance |
+| "Transaction send error" | Transaction không gửi được | Check console log, network, RPC endpoint |
 
