@@ -105,12 +105,15 @@ export default function TransactionHistory({ filter }: { filter?: "all" | "recei
               let amount = 0
               let from = publicKey.toString()
               let to = ""
+              let description = "Transaction"
 
               // Check if transaction has transfers
-              if (tx.meta && tx.transaction.message.accountKeys) {
+              const messageAccountKeys = tx.transaction.message.getAccountKeys()
+              if (tx.meta && messageAccountKeys) {
                 const preBalances = tx.meta.preBalances
                 const postBalances = tx.meta.postBalances
-                const accountKeys = tx.transaction.message.accountKeys
+                // Get all account keys as array
+                const accountKeys = messageAccountKeys.keySegments().flat()
 
                 // Find the wallet's account index
                 const walletIndex = accountKeys.findIndex(
@@ -397,7 +400,7 @@ export default function TransactionHistory({ filter }: { filter?: "all" | "recei
                     <Clock className="h-3 w-3" />
                     <span>{formatDate(tx.timestamp)}</span>
                     <span className="font-mono text-[10px]">
-                      {tx.type === "sent" ? `To: ${tx.to.slice(0, 4)}...${tx.to.slice(-4)}` : `From: ${tx.from?.slice(0, 4)}...${tx.from?.slice(-4)}`}
+                      {tx.type === "sent" ? `To: ${tx.to?.slice(0, 4) || ""}...${tx.to?.slice(-4) || ""}` : `From: ${tx.from?.slice(0, 4) || ""}...${tx.from?.slice(-4) || ""}`}
                     </span>
                   </div>
                 </div>
