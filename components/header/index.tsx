@@ -156,6 +156,16 @@ const Header = () => {
               <span className="whitespace-nowrap">Pack Opener</span>
             </Button>
           </Link>
+          <Link href="/tcg-battle" className="h-full">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="bg-white hover:bg-gray-50 text-black font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-black flex items-center justify-center px-3 py-1.5"
+            >
+              <img src="/sidebar/tradecenter.png?v=2" alt="TCG Battle" className="w-6 h-6 mr-2 object-contain flex-shrink-0" />
+              <span className="whitespace-nowrap">TCG Battle</span>
+            </Button>
+          </Link>
           {!connected || !publicKey ? (
             <Button
               onClick={handleConnectClick}
