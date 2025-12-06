@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -254,9 +255,20 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              © 2025 PokémonTCGDEX. All rights reserved.
-            </p>
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
+              <p className="text-gray-400 text-sm">
+                © 2025 PokémonTCGDEX. All rights reserved.
+              </p>
+              <div className="flex gap-4 text-sm">
+                <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+                <span className="text-gray-600">|</span>
+                <Link href="/terms-of-service" className="text-gray-400 hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </div>
+            </div>
             <div className="flex gap-4 mt-4 md:mt-0">
               <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition-colors">
                 <a
