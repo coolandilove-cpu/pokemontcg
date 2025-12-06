@@ -15,6 +15,7 @@ import {
   Database,
   BookOpen,
   Mail,
+  Sword,
 } from "lucide-react";
 
 export default function HelpContent() {
@@ -32,17 +33,22 @@ export default function HelpContent() {
     {
       question: "How do I trade cards with other users?",
       answer:
-        "Go to the 'Trade' page from the header menu. You can view pending trades, create new trade offers, or accept trade requests from other users. Make sure both parties have connected their wallets.",
+        "Go to the 'Trade' page from the header menu. The trading feature is coming soon! You'll be able to view pending trades, create new trade offers, and accept trade requests from other users. Make sure both parties have connected their wallets.",
+    },
+    {
+      question: "What is TCG Battle?",
+      answer:
+        "TCG Battle is a new feature coming soon! You'll be able to battle with your Pokémon cards against other trainers. Challenge other players and prove your skills in epic card battles. Stay tuned for updates!",
     },
     {
       question: "Where is my collection stored?",
       answer:
-        "Your collection is stored locally in your browser's localStorage, associated with your wallet address. This means your collection is tied to your wallet and will persist across sessions. You can export your collection from Settings for backup.",
+        "Your collection is stored in Supabase database, associated with your wallet address. Your cards are saved when you open packs, and you can view them in the Dashboard. Your collection is tied to your wallet address and will persist across sessions and devices.",
     },
     {
-      question: "Can I transfer my collection to another device?",
+      question: "Can I view my collection on another device?",
       answer:
-        "Yes! Go to Settings > Collection and use the 'Export Collection' button to download a JSON file. Then on your other device, use 'Import Collection' to restore your collection. Make sure you're using the same wallet address.",
+        "Yes! As long as you connect the same wallet address, your collection will be available on any device. Your collection is stored in the cloud (Supabase), so it syncs automatically across all devices using the same wallet.",
     },
     {
       question: "What networks are supported?",
@@ -52,12 +58,17 @@ export default function HelpContent() {
     {
       question: "How do I view my transaction history?",
       answer:
-        "Go to Dashboard > Transactions to view all your transactions. You can filter by 'All', 'Received', or 'Sent' transactions. The history shows pack purchases, trades, and other SOL transfers.",
+        "Go to Dashboard to view all your transactions. You can see pack purchases, SOL transfers, and transaction details. All transactions are saved to Supabase and linked to your wallet address.",
+    },
+    {
+      question: "How do I open packs?",
+      answer:
+        "Go to the Pack Opener page, select a pack you want to purchase, click 'Purchase & Open Pack', confirm the transaction in your wallet, and watch the pack opening animation to reveal your cards. Your cards are automatically added to your collection.",
     },
     {
       question: "What happens if I disconnect my wallet?",
       answer:
-        "If you disconnect your wallet, your collection data remains stored locally but won't be accessible until you reconnect the same wallet address. Your collection is tied to your wallet address, so make sure to use the same wallet when reconnecting.",
+        "If you disconnect your wallet, your collection data remains stored in Supabase but won't be accessible until you reconnect the same wallet address. Your collection is tied to your wallet address, so make sure to use the same wallet when reconnecting.",
     },
   ];
 
@@ -65,12 +76,12 @@ export default function HelpContent() {
     {
       title: "Getting Started",
       icon: BookOpen,
-      description: "Learn the basics of using PokéAlbum",
+      description: "Learn the basics of using PokemonTCGDex",
       steps: [
         "Install a Solana wallet extension (Phantom recommended)",
         "Connect your wallet to the application",
-        "Browse available card packs and collections",
-        "Purchase packs using SOL",
+        "Browse available card packs in Pack Opener",
+        "Purchase packs using SOL (mainnet or devnet)",
         "Open packs to reveal your cards",
         "View and manage your collection in the Dashboard",
       ],
@@ -90,26 +101,40 @@ export default function HelpContent() {
     {
       title: "Trading Cards",
       icon: ArrowLeftRight,
-      description: "How to trade cards with other users",
+      description: "How to trade cards with other users (Coming Soon)",
       steps: [
-        "Navigate to the Trade page",
-        "View available trade offers",
+        "Navigate to the Trade page from header menu",
+        "View available trade offers (feature coming soon)",
         "Create a new trade by selecting cards to offer",
         "Specify cards you want to receive",
         "Wait for the other party to accept",
-        "Complete the trade transaction",
+        "Complete the trade transaction on Solana blockchain",
+      ],
+    },
+    {
+      title: "TCG Battle",
+      icon: Sword,
+      description: "Battle with your Pokémon cards (Coming Soon)",
+      steps: [
+        "Navigate to the TCG Battle page from header menu",
+        "Select your battle deck from your collection",
+        "Challenge other trainers to battles",
+        "Use strategy and card abilities to win",
+        "Earn rewards and climb the leaderboard",
+        "Feature coming soon - stay tuned!",
       ],
     },
     {
       title: "Collection Management",
       icon: Database,
-      description: "Manage and backup your collection",
+      description: "View and manage your Pokémon card collection",
       steps: [
-        "View your collection in Dashboard > Cards",
+        "View your collection in Dashboard",
+        "See all cards you've collected from opening packs",
         "Filter cards by type, rarity, or pack",
-        "Export your collection for backup",
-        "Import collection to restore on another device",
-        "Clear collection if needed (use with caution)",
+        "View collection statistics and progress",
+        "Your collection is automatically saved to Supabase",
+        "Access your collection from any device with the same wallet",
       ],
     },
   ];
@@ -119,7 +144,7 @@ export default function HelpContent() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Help & Support</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">
-          Find answers to common questions and learn how to use PokéAlbum
+          Find answers to common questions and learn how to use PokemonTCGDex
         </p>
       </div>
 
